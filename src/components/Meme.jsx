@@ -2,33 +2,26 @@ import datas from "../MemeData.jsx";
 import { useState } from "react";
 
 export default function Meme() {
-  //   const result = useState("Yes");
+  // const [memeImage, setmemeImage] = useState("http://i.imgflip.com/1bij.jpg");
+  const [meme, setMeme] = useState({
+    topText: "",
+    bottomText: "",
+    randomImage: "http://i.imgflip.com/1bij.jpg",
+  });
+  const [allImages, setAllMemeImages] = useState(datas);
 
-  //   const [isImportant, setImportant] = useState();
-  //   const [count, setCount] = useState(0);
-  const [memeImage, setmemeImage] = useState("");
   function getMemeImage() {
-    const memeArray = datas.data.memes;
+    const memeArray = allImages.data.memes;
     const mmeRandomNum = Math.floor(Math.random() * memeArray.length);
     const getMemeUrl = memeArray[mmeRandomNum].url;
-    setmemeImage(getMemeUrl);
-    // console.log(result);
+    setMeme((prevState) => {
+      return {
+        ...prevState,
+        randomImage: getMemeUrl,
+      };
+    });
+    // setmemeImage(getMemeUrl);
   }
-  //   function addCount() {
-  //     // setCount(count + 1);
-  //     setCount(function (count) {
-  //       return count + 1;
-  //     });
-  //   }
-  //   function minusCount() {
-  //     setCount(function (count) {
-  //       return count - 1;
-  //     });
-  //   }
-
-  //   function handleClick() {
-  //     setImportant("It is a yes or yes! No room for No!");
-  //   }
   return (
     <>
       <div className="meme-div">
@@ -37,11 +30,7 @@ export default function Meme() {
             <input type="text" name="" id="" placeholder="top text" />
             <input type="text" name="" id="" placeholder="bottom text" />
           </div>
-          <button
-            className="meme-generator-button"
-            onClick={getMemeImage}
-            // onClick={handleClick}
-          >
+          <button className="meme-generator-button" onClick={getMemeImage}>
             Get new meme image{" "}
             <img
               src="../src/images/pic-frame.png"
@@ -50,19 +39,10 @@ export default function Meme() {
             />
           </button>
         </div>
-        <img src={memeImage} alt="" />
-      </div>
-      {/* <div className="counter">
-        <button className="counter-minus" onClick={minusCount}>
-          -
-        </button>
-        <div className="counter-count">
-          <h1>{count}</h1>
+        <div className="meme-image-div">
+          <img src={meme.randomImage} alt="" />
         </div>
-        <button className="counter-plus" onClick={addCount}>
-          +
-        </button>
-      </div> */}
+      </div>
     </>
   );
 }
