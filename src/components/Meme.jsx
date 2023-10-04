@@ -23,6 +23,7 @@ export default function Meme() {
       setAllMemeImages(data.data.memes);
     }
     getMemes();
+    return () => {};
   }, []);
   // console.log(allMemes);
   function getMemeImage() {
