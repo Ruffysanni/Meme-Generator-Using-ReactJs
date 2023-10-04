@@ -8,9 +8,21 @@ export default function Meme() {
   });
   const [allMemes, setAllMemeImages] = useState([]);
   useEffect(function () {
-    fetch("https://api.imgflip.com/get_memes")
-      .then((res) => res.json())
-      .then((data) => setAllMemeImages(data.data.memes));
+    /*If we want to use an async function inside of a useEffect, 
+    we need to create a separate function inside of the call back function*/
+
+    /********First method using Fetch************/
+    // fetch("https://api.imgflip.com/get_memes")
+    //   .then((res) => res.json())
+    //   .then((data) => setAllMemeImages(data.data.memes));
+
+    /***************************second method using async**********************/
+    async function getMemes() {
+      const res = await fetch("https://api.imgflip.com/get_memes");
+      const data = await res.json();
+      setAllMemeImages(data.data.memes);
+    }
+    getMemes();
   }, []);
   // console.log(allMemes);
   function getMemeImage() {
